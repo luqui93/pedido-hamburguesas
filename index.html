@@ -2,102 +2,141 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pedido de Hamburguesa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rafa Burger - Pedido</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f8f8f8;
-      padding: 40px;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f3f3f3;
+      color: #333;
     }
-    form {
+    header {
+      background: #ff4d00;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
       background: white;
       padding: 20px;
-      border-radius: 8px;
-      max-width: 450px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    h2 {
-      text-align: center;
+    .burger-img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
     }
     label {
       display: block;
-      margin: 15px 0 5px;
+      margin: 10px 0 5px;
+      font-weight: bold;
     }
     select, input[type="checkbox"], textarea {
       width: 100%;
+      padding: 10px;
       margin-top: 5px;
-      padding: 8px;
-      box-sizing: border-box;
-      border-radius: 4px;
+      border-radius: 5px;
       border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .checkbox-group {
+      margin-top: 10px;
+    }
+    .checkbox-group label {
+      font-weight: normal;
     }
     button {
-      display: block;
-      margin: 20px auto 0;
-      padding: 10px 20px;
-      font-size: 16px;
+      width: 100%;
+      padding: 15px;
       background: #25D366;
       color: white;
       border: none;
-      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-top: 20px;
       cursor: pointer;
+      transition: background 0.3s;
     }
     button:hover {
       background: #1ebe5d;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.8em;
+      color: #aaa;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
 
-  <form id="burgerForm">
-    <h2>🍔 Pedido de Hamburguesa</h2>
+  <header>
+    <h1>🍔 Rafa Burger</h1>
+    <p>Armá tu pedido personalizado</p>
+  </header>
 
-    <label for="tipo">Tipo de Hamburguesa:</label>
-    <select id="tipo" name="tipo" required>
-      <option value="simple">Simple</option>
-      <option value="doble">Doble</option>
-    </select>
+  <div class="container">
+    <img class="burger-img" src="https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_960_720.jpg" alt="Hamburguesa deliciosa">
 
-    <label>
-      <input type="checkbox" id="panceta"> Agregar panceta
-    </label>
+    <form id="burgerForm">
+      <label for="tipo">Tipo de Hamburguesa:</label>
+      <select id="tipo" required>
+        <option value="simple">Simple</option>
+        <option value="doble">Doble</option>
+      </select>
 
-    <label for="bebida">Bebida:</label>
-    <select id="bebida" name="bebida">
-      <option value="ninguna">Ninguna</option>
-      <option value="agua">Agua</option>
-      <option value="gaseosa">Gaseosa</option>
-      <option value="cerveza">Cerveza</option>
-    </select>
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="panceta"> Agregar panceta</label>
+        <label><input type="checkbox" id="papas"> Agregar papas fritas</label>
+      </div>
 
-    <label>
-      <input type="checkbox" id="papas"> Agregar papas fritas
-    </label>
+      <label for="bebida">Bebida:</label>
+      <select id="bebida">
+        <option value="ninguna">Ninguna</option>
+        <option value="agua">Agua</option>
+        <option value="gaseosa">Gaseosa</option>
+        <option value="cerveza">Cerveza</option>
+      </select>
 
-    <label for="comentario">Comentario adicional:</label>
-    <textarea id="comentario" rows="3" placeholder="Ej: sin cebolla, agregar ketchup..."></textarea>
+      <label for="comentario">Comentario adicional:</label>
+      <textarea id="comentario" rows="3" placeholder="Ej: sin cebolla, bien cocida, extra cheddar..."></textarea>
 
-    <button type="submit">Enviar por WhatsApp</button>
-  </form>
+      <button type="submit">📲 Enviar pedido por WhatsApp</button>
+    </form>
+  </div>
+
+  <footer>
+    © 2025 Rafa Burger. Todos los derechos reservados.
+  </footer>
 
   <script>
     document.getElementById("burgerForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const tipo = document.getElementById("tipo").value;
       const panceta = document.getElementById("panceta").checked;
-      const bebida = document.getElementById("bebida").value;
       const papas = document.getElementById("papas").checked;
+      const bebida = document.getElementById("bebida").value;
       const comentario = document.getElementById("comentario").value.trim();
 
       let mensaje = `Hola! Quiero pedir una hamburguesa ${tipo}`;
       mensaje += panceta ? " con panceta" : " sin panceta";
+      mensaje += papas ? ", con papas fritas" : "";
       mensaje += bebida !== "ninguna" ? ` + bebida: ${bebida}` : "";
-      mensaje += papas ? " + papas fritas" : "";
       if (comentario) mensaje += `.\nComentario: ${comentario}`;
 
-      // Número del local o quien recibe el pedido
-      const numero = "5491134774449";
+      const numero = "5491134774449"; // <- CAMBIAR POR TU NÚMERO
       const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
       window.open(url, "_blank");
     });
