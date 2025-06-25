@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pedido de Hamburguesa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      padding: 40px;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 450px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+    select, input[type="checkbox"], textarea {
+      width: 100%;
+      margin-top: 5px;
+      padding: 8px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      display: block;
+      margin: 20px auto 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1ebe5d;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="burgerForm">
+    <h2>🍔 Pedido de Hamburguesa</h2>
+
+    <label for="tipo">Tipo de Hamburguesa:</label>
+    <select id="tipo" name="tipo" required>
+      <option value="simple">Simple</option>
+      <option value="doble">Doble</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="panceta"> Agregar panceta
+    </label>
+
+    <label for="bebida">Bebida:</label>
+    <select id="bebida" name="bebida">
+      <option value="ninguna">Ninguna</option>
+      <option value="agua">Agua</option>
+      <option value="gaseosa">Gaseosa</option>
+      <option value="cerveza">Cerveza</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="papas"> Agregar papas fritas
+    </label>
+
+    <label for="comentario">Comentario adicional:</label>
+    <textarea id="comentario" rows="3" placeholder="Ej: sin cebolla, agregar ketchup..."></textarea>
+
+    <button type="submit">Enviar por WhatsApp</button>
+  </form>
+
+  <script>
+    document.getElementById("burgerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const tipo = document.getElementById("tipo").value;
+      const panceta = document.getElementById("panceta").checked;
+      const bebida = document.getElementById("bebida").value;
+      const papas = document.getElementById("papas").checked;
+      const comentario = document.getElementById("comentario").value.trim();
+
+      let mensaje = `Hola! Quiero pedir una hamburguesa ${tipo}`;
+      mensaje += panceta ? " con panceta" : " sin panceta";
+      mensaje += bebida !== "ninguna" ? ` + bebida: ${bebida}` : "";
+      mensaje += papas ? " + papas fritas" : "";
+      if (comentario) mensaje += `.\nComentario: ${comentario}`;
+
+      // Número del local o quien recibe el pedido
+      const numero = "5491134774449";
+      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, "_blank");
+    });
+  </script>
+
+</body>
+</html>
